@@ -1,0 +1,669 @@
+/*SQL SCRIPT*/
+/*BY ABDUL, BEN, IBRAHEEM AND SACHIN*/
+/*CUSTOMER BEN'S TABLES*/
+
+DROP TABLE Customer CASCADE CONSTRAINTS;
+CREATE TABLE Customer (
+
+CustomerID      NUMBER(8)      		CONSTRAINT      customer_customerid_pk        PRIMARY KEY,
+Name            VARCHAR2(50)   		CONSTRAINT      customer_name_nn              NOT NULL,
+Address         VARCHAR2(100)		CONSTRAINT      customer_address_nn           NOT NULL,
+PostCode        VARCHAR2(10),
+Telephone       VARCHAR2(14)   		CONSTRAINT      customer_telepone_nn          CHECK(regexp_like(Telephone, '^[[:digit:]]+$')),
+PaymentDetails  VARCHAR2(100)  		CONSTRAINT      customer_paymentdetails_nn    NOT NULL
+);
+
+        INSERT INTO Customer (CustomerID, Name, Address, PostCode, Telephone, PaymentDetails)
+        VALUES (1, 'Jon Miles', '23 Station Road, Gedling, Nottingham', 'NG14 5AM', '07943838801', '00-01-46, 82129430');
+        
+        INSERT INTO Customer (CustomerID, Name, Address, PostCode, Telephone, PaymentDetails)
+        VALUES (2, 'David Jones', '53 Hulme High Street, Hulme, Manchester', 'M15 5AX', '07638456211', '12-12-01, 84567897');
+        
+        INSERT INTO Customer (CustomerID, Name, Address, PostCode, Telephone, PaymentDetails)
+        VALUES (3, 'Paul Smith', '45 Mancunian Way, Manchester', 'M15 5JR', '07212134564', '01-00-04, 89431234');
+        
+        INSERT INTO Customer (CustomerID, Name, Address, PostCode, Telephone, PaymentDetails)
+        VALUES (4, 'David Peterson', '17 Long Road, Newcastle', 'N63 7AZ', '07948789452', '01-02-05, 84567891');
+        
+        INSERT INTO Customer (CustomerID, Name, Address, PostCode, Telephone, PaymentDetails)
+        VALUES (5, 'Bill Dickens', '46 Lambley Lane, Newark', 'N67 2AR', '07913234591', '01-02-00, 87894561');
+
+
+/*CUSTOMER ACCOUNT ABDUL'S TABLES*/
+DROP TABLE Customer_Account CASCADE CONSTRAINTS;
+CREATE TABLE Customer_Account (
+
+Username 	    VARCHAR2(50)		 CONSTRAINT      customerAccount_username_pk   	PRIMARY KEY,
+CustomerID      NUMBER(8)			 CONSTRAINT		 customerAccount_customerID_fk	REFERENCES Customer(CustomerID),
+Password        VARCHAR2(20)         CONSTRAINT      customerAccount_password_nn    NOT NULL 
+);
+
+        INSERT INTO Customer_Account (Username, CustomerID, Password)
+        VALUES ('JMILES1', 1, 'Nukes321');
+        
+        INSERT INTO Customer_Account (Username, CustomerID, Password)
+        VALUES ('DJONES94', 2, 'cakeRR32');
+        
+        INSERT INTO Customer_Account (Username, CustomerID, Password)
+        VALUES ('PSMITH123', 3,'YARRR2930');
+        
+        INSERT INTO Customer_Account (Username, CustomerID, Password)
+        VALUES ('DPETERSON79', 4, 'topG3012');
+        
+        INSERT INTO Customer_Account (Username, CustomerID, Password)
+        VALUES ('BDICKENS123', 5, 'tyson2094*');
+
+/*RENTAL*IBRAHEEM'S TABLE*/
+DROP TABLE Rental CASCADE CONSTRAINTS;
+CREATE TABLE Rental (
+
+RentalID        NUMBER(10)       	CONSTRAINT      rental_rentalID_pk            	PRIMARY KEY,
+CustomerID      NUMBER(8)        	CONSTRAINT      rental_customerid_fk          	REFERENCES Customer (CustomerID),
+OrderDate       DATE,
+StaffID         NUMBER(8)           CONSTRAINT      rental_StaffID_fk               REFERENCES Staff (StaffID)
+);
+
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (1, 1, '20-APR-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (2, 2, '29-FEB-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (3, 3, '19-MAR-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (4, 4, '17-JUN-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (5, 5, '30-JUL-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (6, 1, '20-APR-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (7, 2, '29-FEB-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (8, 3, '19-MAR-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (9, 4, '17-JUN-20');
+        
+        INSERT INTO Rental (RentalID, CustomerID, OrderDate)
+        VALUES (10, 5, '30-JUL-20');
+        
+        
+/*STAFF ABDUL'S TABLES*/		
+DROP TABLE Staff CASCADE CONSTRAINTS;
+CREATE TABLE Staff (
+
+StaffID			NUMBER(8)			CONSTRAINT		staff_staffID_pk				PRIMARY KEY,
+FullName		VARCHAR2(50)        CONSTRAINT      staff_fullName_nn               NOT NULL,
+DoB				DATE				CONSTRAINT		staff_dob_nn					NOT NULL
+);
+        
+        INSERT INTO Staff (StaffID, FullName, DoB)
+        VALUES (1, 'Sachin Sethi', '16-JUL-99');
+        
+        INSERT INTO Staff (StaffID, FullName, DoB)
+        VALUES (2, 'Ibraheem Younis', '15-MAY-96');
+        
+        INSERT INTO Staff (StaffID, FullName, DoB)
+        VALUES (3, 'Abdul Qahhar', '23-JUN-98');
+        
+        INSERT INTO Staff (StaffID, FullName, DoB)
+        VALUES (4, 'Ben Roebuck', '20-APR-94');
+
+
+/*BOAT CATEGORY IBRAHEEM'S TABLE*/
+DROP TABLE Boat_Category CASCADE CONSTRAINTS;
+CREATE TABLE Boat_Category (
+
+BoatCategoryID 	NUMBER(8)			CONSTRAINT		boatCategory_boatCategoryID_pk	PRIMARY KEY,
+BoatSize		VARCHAR2(20),
+BoatCapacity	NUMBER(10)			CONSTRAINT		boatCategory_boatCapacity_nn	NOT NULL,
+Classification	VARCHAR2(20)
+);
+		
+		INSERT INTO Boat_Category (BoatCategoryID, BoatSize, BoatCapacity, Classification) 
+		VALUES (1, 'Large', 10, 'Yatch');
+
+		INSERT INTO Boat_Category (BoatCategoryID, BoatSize, BoatCapacity, Classification) 
+		VALUES (2, 'Small', 4, 'Motorboat');
+
+		INSERT INTO Boat_Category (BoatCategoryID, BoatSize, BoatCapacity, Classification) 
+		VALUES (3,'Medium', 8, 'Sail Boat');
+
+		INSERT INTO Boat_Category (BoatCategoryID, BoatSize, BoatCapacity, Classification) 
+		VALUES (4,'Medium', 8, 'Speed Boat');
+        
+/*DISPOSAL DEALER BEN'S TABLES*/
+DROP TABLE Disposal_Dealer CASCADE CONSTRAINTS;
+CREATE TABLE Disposal_Dealer (
+
+DealerID		NUMBER(8)			CONSTRAINT		disposalDealer_dealerID_pk		PRIMARY KEY,
+Name			VARCHAR2(50)		CONSTRAINT		disposalDealer_name_nn			NOT NULL,
+Telephone		VARCHAR2(10)		CONSTRAINT		disposalDealer_telephone_nn		CHECK(regexp_like(Telephone, '^[[:digit:]]+$')),
+Address			VARCHAR2(100)		CONSTRAINT		disposalDealer_address_nn		NOT NULL
+);
+
+	INSERT INTO Disposal_Dealer (DealerID, Name, Telephone, Address)
+	VALUES (1, 'Yuri Khan', 075998413, '83  Stroud Rd, OLD DAILLY, KA26 2SE');
+ 
+	INSERT INTO Disposal_Dealer (DealerID, Name, Telephone, Address)
+	VALUES (2, 'Conrad King', 078792311, '23 Glenurquhart Road, BALDRINE, IM4 2XR');
+
+	INSERT INTO Disposal_Dealer (DealerID, Name, Telephone, Address)
+	VALUES (3, 'James Hussain', 0782843045, '64 Russell Rd, SHILLINGFORD ST GEORGE, EX2 6UN');
+
+	INSERT INTO Disposal_Dealer (DealerID, Name, Telephone, Address)
+	VALUES (4, 'Jordan Times', 0738451118, '96 Preston Rd, MORLEY GREEN, SK9 1ZL');
+
+	INSERT INTO Disposal_Dealer (DealerID, Name, Telephone, Address)
+	VALUES (5, 'Arther Smith', 0795391119, '90 Rhosddu Rd, FINGLAND, DG4 4AZ');
+
+/*SUPPLIER SACHIN'S TABLES*/
+DROP TABLE Supplier CASCADE CONSTRAINTS;
+CREATE TABLE Supplier (
+
+SupplierID	      NUMBER(8)          CONSTRAINT         supplier_supplierID_pk        PRIMARY KEY,
+Name   	          VARCHAR2(50)       CONSTRAINT         supplier_name_nn              NOT NULL,
+Telephone         VARCHAR2(11)       CONSTRAINT         supplier_number_nn	          CHECK(regexp_like(Telephone, '^[[:digit:]]+$')),
+Email             VARCHAR2(50)       CONSTRAINT         supplier_email_nn             NOT NULL
+);
+
+	INSERT INTO Supplier (SupplierID, Name, Telephone, Email)
+	VALUES (1, 'Adil Hussain', '0798214563', 'A.Hussain@live.com');
+	
+	INSERT INTO Supplier (SupplierID, Name, Telephone, Email )
+	VALUES (2, 'Rameel Ahemed', '0730451118', 'rambo2000@outlook.com');
+
+	INSERT INTO Supplier (SupplierID, Name, Telephone, Email )
+	VALUES (3, 'Abbas Qhan', '0703593022', 'abbasQQQQ@gmail.com');
+	
+	INSERT INTO Supplier (SupplierID, Name, Telephone, Email )
+	VALUES (4, 'Yasir Shah', '0782083452', 'shah02@gmail.com');
+
+	INSERT INTO Supplier (SupplierID, Name, Telephone, Email )
+	VALUES (5, 'Glen Murray', '0798492993', 'glenmurray@outlook.com');
+	
+
+/*BOATS BEN'S TABLES*/
+DROP TABLE Boats CASCADE CONSTRAINTS;
+CREATE TABLE Boats (
+
+BoatID			NUMBER(8)			CONSTRAINT		boats_boatID_pk					PRIMARY KEY,
+BoatCategoryID	NUMBER(8)   		CONSTRAINT		boats_boatCategory_fk			REFERENCES Boat_Category(BoatCategoryID),
+DealerID		NUMBER(8)			CONSTRAINT		boats_dealerID_fk				REFERENCES Disposal_Dealer(DealerID),
+OnHandQuantity	NUMBER(5),
+Model			VARCHAR2(50)		CONSTRAINT		boats_model_nn					NOT NULL,
+PurchaseDate	DATE    			CONSTRAINT		boats_purchaseDate_nn			NOT NULL,
+PurchasePrice	NUMBER(9,2)  	    CONSTRAINT	 	boats_purchasePrice_nn			NOT NULL,
+SaleDate		DATE
+);
+
+
+	INSERT INTO Boats(BoatID,BoatCategoryID, DealerID, OnHandQuantity, Model, PurchaseDate, PurchasePrice,SaleDate)
+	VALUES(1,1,1,10,'Renault','12-FEB-09',800.50,'20-FEB-20');
+	
+	INSERT INTO Boats(BoatID,BoatCategoryID, DealerID, OnHandQuantity, Model, PurchaseDate, PurchasePrice,SaleDate)
+	VALUES(2,2,NULL,8,'Ford','15-FEB-07',500.50,NULL);
+	
+	INSERT INTO Boats(BoatID,BoatCategoryID, DealerID, OnHandQuantity, Model, PurchaseDate, PurchasePrice,SaleDate)
+	VALUES(3,3,NULL,6,'Speed','12-NOV-04',600.00, NULL);
+	
+	INSERT INTO Boats(BoatID,BoatCategoryID, DealerID, OnHandQuantity, Model, PurchaseDate, PurchasePrice,SaleDate)
+	VALUES(4,2,NULL,12,'Mercedes','16-JAN-02',700.00,NULL);
+	
+	INSERT INTO Boats(BoatID,BoatCategoryID, DealerID, OnHandQuantity, Model, PurchaseDate, PurchasePrice,SaleDate)
+	VALUES(5,3,NULL,16,'BMW','01-JUN-01',960.00,NULL);    
+    
+    INSERT INTO Boats(BoatID,BoatCategoryID, DealerID, OnHandQuantity, Model, PurchaseDate, PurchasePrice,SaleDate)
+	VALUES(6,4,NULL,16,'BMW','01-JUN-18',2500.00,NULL);  
+
+/*PART SACHIN'S TABLES*/
+DROP TABLE Parts CASCADE CONSTRAINTS;
+CREATE TABLE Parts (
+
+PartID              NUMBER(8)        CONSTRAINT      parts_partID_pk           PRIMARY KEY,
+OnHandQuantity      NUMBER(10)       CONSTRAINT      parts_onhandquantity_nn   NOT NULL,
+Description         VARCHAR2(10)    
+);
+
+	INSERT INTO Parts (PartID, OnHandQuantity, Description)
+	VALUES (1, '123', 'Nut');
+
+	INSERT INTO Parts (PartID, OnHandQuantity, Description)
+	VALUES (2, '32', 'Bolt');
+
+	INSERT INTO Parts (PartID, OnHandQuantity, Description)
+	VALUES (3, '14', 'Wheel');
+
+	INSERT INTO Parts (PartID, OnHandQuantity, Description)
+	VALUES (4, '194', 'Screw');
+
+	INSERT INTO Parts (PartID, OnHandQuantity, Description)
+	VALUES (5, '34', 'Axle');
+    
+/*PARTS QUOTE SACHIN'S TABLES*/
+DROP TABLE Parts_Quote CASCADE CONSTRAINTS;
+CREATE TABLE Parts_Quote (
+
+QuoteID        NUMBER(8)         CONSTRAINT         pQuote_quoteID_pk		 PRIMARY KEY,
+PartID         NUMBER(8)         CONSTRAINT         pQuote_partID_fk         REFERENCES Parts(PartID),
+SupplierID     NUMBER(8)         CONSTRAINT         pQuote_supplierID_fk     REFERENCES Supplier(SupplierID),
+Price          NUMBER(9,2)       CONSTRAINT         pQuote_price_nn          NOT NULL,
+Quantity       NUMBER(3)         CONSTRAINT         pQuote_quantity_nn       CHECK(regexp_like(Quantity, '^[[:digit:]]+$')),
+QuoteDate      DATE
+);
+
+
+	INSERT INTO Parts_Quote (QuoteID, PartID, SupplierID, Price, Quantity, QuoteDate )
+	VALUES (1, 1, 1, '40.00', '5', '12-FEB-20');
+
+	INSERT INTO Parts_Quote (QuoteID, PartID, SupplierID, Price, Quantity, QuoteDate )
+	VALUES (2, 2, 2, '23.00', '3', '14-JAN-20');
+	
+	INSERT INTO Parts_Quote (QuoteID, PartID, SupplierID, Price, Quantity, QuoteDate )
+	VALUES (3, 3, 3, '4.00', '10', '24-DEC-19');
+
+	INSERT INTO Parts_Quote (QuoteID, PartID, SupplierID, Price, Quantity, QuoteDate )
+	VALUES (4, 4, 1, '13.00', '15', '20-DEC-19');
+
+	INSERT INTO Parts_Quote (QuoteID, PartID, SupplierID, Price, Quantity, QuoteDate )
+	VALUES (5, 5, 1, '70.00', '35', '11-FEB-20');
+
+
+
+/*PARTS REQUEST SACHIN'S TABLES*/
+DROP TABLE Parts_Request CASCADE CONSTRAINTS;
+CREATE TABLE Parts_Request (
+
+PartsRequestID      NUMBER(8)         CONSTRAINT    partRequest_partsRequestID_pk   PRIMARY KEY,
+PartID              NUMBER(8)         CONSTRAINT    partsRequest_partID_fk          REFERENCES Parts(PartID)
+);
+
+
+	INSERT INTO Parts_Request (PartsRequestID, PartID)
+	VALUES(1,1);
+
+	INSERT INTO Parts_Request (PartsRequestID, PartID)
+	VALUES(2,2);
+	
+	INSERT INTO Parts_Request (PartsRequestID, PartID)
+	VALUES(3,3);
+	
+	INSERT INTO Parts_Request (PartsRequestID, PartID)
+	VALUES(4,1);
+	
+	INSERT INTO Parts_Request (PartsRequestID, PartID)
+	VALUES(5,1);
+    
+/*PARTS LINE SACHIN'S TABLES*/
+DROP TABLE Parts_Line CASCADE CONSTRAINTS;
+CREATE TABLE Parts_Line (
+
+LineID             NUMBER(8)         CONSTRAINT         partsLine_lineID_pk          PRIMARY KEY,
+PartsRequestID     NUMBER(8)         CONSTRAINT         partsLine_partsRequestID_fk  REFERENCES Parts_Request(PartsRequestID),
+PartID             NUMBER(8)         CONSTRAINT         partsLine_partID_fk          REFERENCES Parts(PartID),
+Quantity           NUMBER(3)         CONSTRAINT         partsLine_quantity_nn        CHECK(regexp_like(Quantity, '^[[:digit:]]+$'))
+);
+
+	
+	INSERT INTO Parts_Line (LineID, PartsRequestID, PartID, Quantity)
+	VALUES (1, 1, 1, '5');
+	
+	INSERT INTO Parts_Line (LineID, PartsRequestID, PartID, Quantity)
+	VALUES (2, 2, 2, '3');
+	
+	INSERT INTO Parts_Line (LineID, PartsRequestID, PartID, Quantity)
+	VALUES (3, 3, 3, '10');
+
+	INSERT INTO Parts_Line (LineID, PartsRequestID, PartID, Quantity)
+	VALUES (4, 4, 1, '15');
+	
+	INSERT INTO Parts_Line (LineID, PartsRequestID, PartID, Quantity)
+	VALUES (5, 5, 1, '35');
+	
+/*SERVICE REQUEST SACHIN'S TABLES*/
+DROP TABLE Service_Request CASCADE CONSTRAINTS;
+CREATE TABLE Service_Request (
+
+ServiceRequestID         NUMBER(8)       CONSTRAINT    serviceRequest_serviceRequestID_pk  PRIMARY KEY,
+BoatID                   NUMBER(8)       CONSTRAINT    serviceRequest_boatID_fk            REFERENCES Boats(BoatID),
+PartsRequestID           NUMBER(8)       CONSTRAINT    serviceRequest_partsRequestID_fk    REFERENCES Parts_Request(PartsRequestID),
+WorkToBeDone             VARCHAR2(250),
+ServiceDate              DATE
+);
+
+	
+	INSERT INTO Service_Request (ServiceRequestID, BoatID, PartsRequestID, WorkToBeDone, ServiceDate)
+	VALUES(1,1,1,'Service','12-JAN-20');
+	
+	INSERT INTO Service_Request (ServiceRequestID, BoatID, PartsRequestID, WorkToBeDone, ServiceDate)
+	VALUES(2,2,1,'Body Panels','10-JAN-20');
+	
+	INSERT INTO Service_Request (ServiceRequestID, BoatID, PartsRequestID, WorkToBeDone, ServiceDate)
+	VALUES(3,3,3,'New Engine','5-JAN-20');
+	
+	INSERT INTO Service_Request (ServiceRequestID, BoatID, PartsRequestID, WorkToBeDone, ServiceDate)
+	VALUES(4,4,1,'Replacement Rudder','4-JAN-20');
+	
+	INSERT INTO Service_Request (ServiceRequestID, BoatID, PartsRequestID, WorkToBeDone, ServiceDate)
+	VALUES(5,5,3,'Engine','14-DEC-19');
+
+/*MAINTENANCE LOG BEN'S TABLES*/
+DROP TABLE Maitenance_Log  CASCADE CONSTRAINTS;
+CREATE TABLE Maitenance_Log (
+
+MaintenanceID	NUMBER(8)			CONSTRAINT		mLog_maintenanceID_pk		PRIMARY KEY,
+BoatID			NUMBER(8)			CONSTRAINT		mLog_boatID_fk		    	REFERENCES Boats(BoatID),
+MaintenanceDate	DATE,
+WorkDone		VARCHAR2(250),
+CompletedBy		VARCHAR2(20)
+);
+
+		
+		INSERT INTO Maitenance_Log (MaintenanceID, BoatID, MaintenanceDate, WorkDone, CompletedBy)
+		VALUES (1,1,'18-FEB-20','Replaced Wheel','Sachin');
+		
+		INSERT INTO Maitenance_Log (MaintenanceID, BoatID, MaintenanceDate, WorkDone, CompletedBy)
+		VALUES (2,1,'19-FEB-19', 'Replaced Engine', 'Bob');
+		
+		INSERT INTO Maitenance_Log (MaintenanceID, BoatID, MaintenanceDate, WorkDone, CompletedBy)
+		VALUES (3,2,'17-MAR-03', 'Painted', 'Bill');
+		
+		INSERT INTO Maitenance_Log (MaintenanceID, BoatID, MaintenanceDate, WorkDone, CompletedBy)
+		VALUES (4,3,'19-JUN-02', 'Serviced', 'Bill');
+		
+		INSERT INTO Maitenance_Log (MaintenanceID, BoatID, MaintenanceDate, WorkDone, CompletedBy)
+		VALUES (5,4,'12-JAN-01', 'Serviced', 'Sachin');
+		
+
+
+/*RENTAL LINE SACHIN'S TABLES*/
+DROP TABLE Rental_Line CASCADE CONSTRAINTS;
+CREATE TABLE Rental_Line(
+PRIMARY KEY (BoatID,RentalID),
+RentalID		NUMBER(8)			CONSTRAINT		rentalLine_rentalID_pk_fk		REFERENCES Rental(RentalID),
+BoatID          NUMBER(8)           CONSTRAINT		rentalLine_boatID_pk_fk	        REFERENCES Boats(BoatID),
+Quantity        NUMBER(10)			CONSTRAINT      rentalLine_quantity_nn			CHECK(regexp_like(Quantity, '^[[:digit:]]+$')),
+Price           NUMBER(9,2)         CONSTRAINT      rentalLine_price_nn             NOT NULL,
+RentalDate      DATE                CONSTRAINT      rentalLine_rentaldate_nn        NOT NULL,
+TimeOut         TIMESTAMP           CONSTRAINT      rentalLine_timeout_nn           NOT NULL,
+TimeDueBack     TIMESTAMP           CONSTRAINT      rentalLine_timedueback_nn       NOT NULL,
+TimeBackActual  TIMESTAMP           CONSTRAINT      rentalLine_timebackactual_nn    NOT NULL,
+AmountPaid      NUMBER(9,2)         CONSTRAINT      rentalLine_amountpaid_nn        NOT NULL
+);
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (1,1,1,540.50, '12-FEB-20', '12-FEB-20 15:00:00', '12-FEB-20 15:30:00', '12-FEB-20 15:45:00', 540.50);
+	
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (2,2,1,700.50, '01-JAN-20', '1-JAN-20 11:50:00', '01-JAN-20 13:55:00','01-JAN-20 13:56:04',700.50);
+	
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (3,3,1,190.50,'01-FEB-20', '01-FEB-20 17:50:00', '01-FEB-20 18:50:00', '01-FEB-20 18:55:00', 190.50);
+	
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (4,4,1,375.50 , '19-DEC-19', '19-DEC-19 15:50:00', '19-DEC-19 18:50:00', '19-DEC-19 19:45:00', 375.50);
+	
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (5,5,1,500.00, '03-FEB-20', '03-FEB-20 12:00:00', '03-FEB-20 12:40:00', '03-FEB-2012:40:00', 500.00);
+    
+    INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (6,1,1,500.00, '12-FEB-18', '12-FEB-20 15:00:00', '12-FEB-20 15:30:00', '12-FEB-20 15:45:00', 540.50);
+	
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (7,2,1,700.50, '01-JAN-18', '1-JAN-20 11:50:00', '01-JAN-20 13:55:00','01-JAN-20 13:56:04',700.50);
+	
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (8,3,1,190.50,'01-FEB-17', '01-FEB-20 17:50:00', '01-FEB-20 18:50:00', '01-FEB-20 18:55:00', 190.50);
+	
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (9,4,1,375.500 , '19-DEC-17', '19-DEC-19 15:50:00', '19-DEC-19 18:50:00', '19-DEC-19 19:45:00', 375.50);
+	
+	INSERT INTO Rental_Line (RentalID, BoatID, Quantity, Price, RentalDate, TimeOut, TimeDueBack, TimeBackActual,AmountPaid)
+	VALUES (10,5,1,500.00, '03-FEB-18', '03-FEB-20 12:00:00', '03-FEB-20 12:40:00', '03-FEB-2012:40:00', 500.00);
+
+/*** SQL Queries ***/
+
+/* Report showing top customers, and if they have spent over 500, offers discount on next order - Written by Ben*/
+SELECT
+CUS.NAME "Customer Name",
+SUM(RNL.AMOUNTPAID) "Total Spent",
+COUNT(REN.RENTALID) "Number of Orders",
+CASE WHEN SUM(RNL.AMOUNTPAID) > 500 THEN 'Eligible for 10% Discount' ELSE 'No Discount Offered' END "Discount on Next Order" -- Case to decide whether discount is applicable
+
+FROM Customer CUS
+
+JOIN Rental REN
+ON CUS.CUSTOMERID = REN.CUSTOMERID
+
+JOIN Rental_Line RNL
+ON REN.RENTALID = RNL.RENTALID
+
+JOIN Boats BOT
+ON RNL.BOATID = BOT.BOATID
+
+JOIN Boat_Category CAT
+ON BOT.BOATCATEGORYID = CAT.BOATCATEGORYID
+
+GROUP BY CUS.NAME -- Group by Customer Name
+ORDER BY SUM(RNL.AMOUNTPAID) DESC; -- Order by the sum of price in descending order;
+
+/* Monthy Sales Report to show the most popular months - by Ben */
+
+SELECT
+to_char(REN.ORDERDATE, 'MONTH') "Order Month", -- Turning order date from full date to just the month
+SUM(RNL.AMOUNTPAID) "Sales Revenue", -- Summing the rental line price
+COUNT(REN.RENTALID) "Number of Orders" -- Counting the number of Orders
+
+FROM Customer CUS
+
+JOIN Rental REN
+ON CUS.CUSTOMERID = REN.CUSTOMERID
+
+JOIN Rental_Line RNL
+ON REN.RENTALID = RNL.RENTALID
+
+JOIN Boats BOT
+ON RNL.BOATID = BOT.BOATID
+
+JOIN Boat_Category CAT
+ON BOT.BOATCATEGORYID = CAT.BOATCATEGORYID
+
+GROUP BY to_char(REN.ORDERDATE, 'MONTH') -- Group by month
+
+ORDER BY SUM(RNL.AMOUNTPAID) DESC; -- Order by the sum of rental line price in descending order;
+
+/* Sale Report showing most popular type of boat - by Ben*/
+
+SELECT
+CAT.CLASSIFICATION "Class. of Boat",
+COUNT(RNL.RENTALID) "Number of times rented",
+SUM(RNL.AMOUNTPAID) "Sum of Revenue"
+
+FROM Customer CUS
+
+JOIN Rental REN
+ON CUS.CUSTOMERID = REN.CUSTOMERID
+
+JOIN Rental_Line RNL
+ON REN.RENTALID = RNL.RENTALID
+
+JOIN Boats BOT
+ON RNL.BOATID = BOT.BOATID
+
+JOIN Boat_Category CAT
+ON BOT.BOATCATEGORYID = CAT.BOATCATEGORYID
+
+GROUP BY CAT.CLASSIFICATION -- Group by type of boat
+
+ORDER BY SUM(RNL.AMOUNTPAID) DESC; -- Order by the sum of rental line price in descending order;
+
+/* Report comparing the number of times a boat was serviced to the number of times it was rented */
+
+SELECT
+CAT.CLASSIFICATION "Class. of Boat",
+COUNT(RNL.RENTALID) "Number of times rented",
+COUNT(SRE.SERVICEREQUESTID) "Number of times serviced"
+
+FROM Boats BOT
+
+JOIN Boat_Category CAT
+ON BOT.BOATCATEGORYID = CAT.BOATCATEGORYID
+
+LEFT OUTER JOIN Service_Request SRE -- Left outer join as the boat might not have been serviced
+ON BOT.BOATID = SRE.BOATID
+
+LEFT OUTER JOIN Rental_LINE RNL -- Left outer join as boat might not have been rented
+ON BOT.BOATID = RNL.BOATID
+
+GROUP BY CAT.CLASSIFICATION; -- Group by type of boat
+
+/* Report showing how much has been spent on parts for each boat - by Ben*/
+
+SELECT
+BOT.BOATID "Boat ID",
+CAT.CLASSIFICATION "Boat Category",
+COUNT(PRE.PARTSREQUESTID) "Number of Parts Requests",
+COALESCE(SUM(PQU.PRICE * PQU.QUANTITY),0) "Amount spent on parts" -- Coalesce to set value to 0 if is null
+
+FROM Boats BOT
+
+JOIN Boat_Category CAT
+ON BOT.BOATCATEGORYID = CAT.BOATCATEGORYID
+
+LEFT OUTER JOIN Service_Request SRE
+ON BOT.BOATID = SRE.BOATID
+
+LEFT OUTER JOIN Parts_Request PRE
+ON SRE.PARTSREQUESTID = PRE.PARTSREQUESTID
+
+LEFT OUTER JOIN Parts_Line PLE
+ON PRE.PARTSREQUESTID = PLE.PARTSREQUESTID
+
+LEFT OUTER JOIN Parts PAR
+ON PLE.PARTID = PAR.PARTID
+
+LEFT OUTER JOIN Parts_Quote PQU
+ON PAR.PARTID = PQU.PARTID
+
+GROUP BY BOT.BOATID, CAT.CLASSIFICATION
+
+ORDER BY BOT.BOATID;
+
+/* Return on Investment - by Ben */
+
+SELECT
+BOT.BOATID "Boat ID",
+CAT.CLASSIFICATION "Boat Category",
+BOT.PURCHASEPRICE "Purchase Price",
+COALESCE(SUM(RNL.AMOUNTPAID),0) "Revenue from Rentals",
+COALESCE(SUM(PQU.PRICE * PQU.QUANTITY)/COUNT(BOT.BOATID),0) "Amount spent on parts", -- Dividing the (quantity * price) by count of Boat ID as Boat ID appears multiple times due to multiple rentals, and this doubles up the price
+(BOT.PURCHASEPRICE * -1) + COALESCE(SUM(RNL.AMOUNTPAID),0) - COALESCE((SUM(PQU.PRICE * PQU.QUANTITY))/COUNT(BOT.BOATID),0) "Return on Investment", -- Purchase Price (Negative) + sales revnenues - parts costs = ROI 
+
+CASE WHEN (BOT.PURCHASEPRICE * -1) + COALESCE(SUM(RNL.AMOUNTPAID),0) - COALESCE((SUM(PQU.PRICE * PQU.QUANTITY))/COUNT(BOT.BOATID),0) = 0 THEN 'Broke Even'
+
+     WHEN (BOT.PURCHASEPRICE * -1) + COALESCE(SUM(RNL.AMOUNTPAID),0) - COALESCE((SUM(PQU.PRICE * PQU.QUANTITY))/COUNT(BOT.BOATID),0) < 0 THEN 'In the Red'
+     
+     WHEN (BOT.PURCHASEPRICE * -1) + COALESCE(SUM(RNL.AMOUNTPAID),0) - COALESCE((SUM(PQU.PRICE * PQU.QUANTITY))/COUNT(BOT.BOATID),0) > 0 THEN 'Turned a Profit'
+     
+END "Profitability"
+
+FROM Boats BOT
+
+JOIN Boat_Category CAT
+ON BOT.BOATCATEGORYID = CAT.BOATCATEGORYID
+
+LEFT OUTER JOIN Rental_Line RNL
+ON BOT.BOATID = RNL.BOATID
+
+LEFT OUTER JOIN Service_Request SRE
+ON BOT.BOATID = SRE.BOATID
+
+LEFT OUTER JOIN Parts_Request PRE
+ON SRE.PARTSREQUESTID = PRE.PARTSREQUESTID
+
+LEFT OUTER JOIN Parts_Line PLE
+ON PRE.PARTSREQUESTID = PLE.PARTSREQUESTID
+
+LEFT OUTER JOIN Parts PAR
+ON PLE.PARTID = PAR.PARTID
+
+LEFT OUTER JOIN Parts_Quote PQU
+ON PAR.PARTID = PQU.PARTID
+
+GROUP BY BOT.BOATID, CAT.CLASSIFICATION, BOT.PURCHASEPRICE
+
+ORDER BY BOT.BOATID;
+
+/* Show Customers with Manchester Postcode - by Ibraheem */ 
+
+SELECT 
+NAME "Name",
+ADDRESS "Adress",
+POSTCODE "Postcode",
+TELEPHONE "Telephone"
+
+FROM Customer
+
+WHERE POSTCODE LIKE 'M%';
+
+/* Show how long each boat has been owened for - by Ibraheem */
+
+SELECT
+BOATID "Boat ID",
+MODEL "Model",
+PURCHASEDATE "Purchase Date",
+ROUND( -- Case saying if the saledate is NULL then Mike still owns the boat, so minus purchase date from sysdate, if sold minus purchase date from sale date
+    CASE WHEN  SALEDATE IS NULL THEN (SYSDATE - PURCHASEDATE) 
+    ELSE (SALEDATE - PURCHASEDATE)
+END/365) "Time Held in Years (Rounded)"
+
+FROM Boats
+
+ORDER BY (SYSDATE - PURCHASEDATE) DESC;
+
+/* Query showing who the sold boat(s) were sold to - by Abdul*/
+
+SELECT 
+BOT.BOATID "Boat ID",
+BOT.SALEDATE "Sale Date",
+DEL.NAME "Dealer Name"
+
+FROM Boats BOT
+
+JOIN Disposal_Dealer DEL
+ON BOT.DEALERID = DEL.DEALERID
+
+WHERE SALEDATE IS NOT NULL;
+
+/* Query showing which supplier is used the most - by Abdul*/
+
+SELECT 
+SUP.NAME "Supplier Name",
+COUNT(PQU.QUOTEID) "No. Orders to Supplier"
+
+FROM Supplier SUP
+
+JOIN Parts_Quote PQU
+ON SUP.SUPPLIERID = PQU.SUPPLIERID
+
+GROUP BY SUP.NAME;
+
+/*Query to find Staff who are older than 23 - by Sachin*/
+SELECT StaffID "Staff ID", FullName "Full Name", DoB "DoBSS"
+FROM Staff
+WHERE Dob <='01-JAN-1997'
+ORDER BY DOB ASC;
+
+/*How long the customer has held on the boat for - by Sachin*/
+SELECT BoatID "Boat ID", RentalDate "Rental Date",TO_CHAR(TimeBackActual-TimeOut,'HH24:MI:SS') "Time Held of the Boat", AmountPaid "Amount Paid"
+FROM Rental_Line;
+
+/*What work did Sachin do for boats maintenance - by Sachin*/
+SELECT MaintenanceID "Maintenance ID", WorkDone "Work Done", CompletedBy "Completed By"
+From Maitenance_Log
+WHERE CompletedBy in ('Sachin');
